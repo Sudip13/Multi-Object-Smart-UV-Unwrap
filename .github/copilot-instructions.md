@@ -1,6 +1,6 @@
-# Blender Smart UV Unwrap Addon Development
+# Multi-Object Smart UV Unwrap Addon Development
 
-This workspace contains a Blender addon that provides smart UV unwrapping functionality for individual objects, keeping each object's UV islands separate instead of sharing the same UV map.
+This workspace contains a Blender addon that provides smart UV unwrapping functionality for multiple objects simultaneously, keeping each object's UV islands separate instead of sharing the same UV map.
 
 ## Project Structure
 - **`__init__.py`** - Main addon entry point with registration
@@ -16,12 +16,14 @@ This workspace contains a Blender addon that provides smart UV unwrapping functi
 
 ## Addon Functionality
 The addon provides:
-1. Smart UV unwrapping for individual objects
+1. Smart UV unwrapping for multiple objects simultaneously
 2. Separate UV islands per object (no shared UV maps)
-3. UI panel in 3D Viewport for easy access
-4. Support for multiple object selection
+3. Optional pack islands with customizable margins and rotation
+4. UI panel in 3D Viewport for easy access
+5. Support for multiple object selection with presets
 
 ## Technical Requirements
 - Blender Python API (bpy)
 - bmesh for mesh operations
 - UV unwrapping utilities from Blender
+- Pack islands functionality

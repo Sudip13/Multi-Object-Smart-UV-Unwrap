@@ -5,10 +5,10 @@ from bpy.props import FloatProperty, BoolProperty
 
 
 class MESH_OT_smart_uv_unwrap_individual(Operator):
-    """Smart UV unwrap individual objects separately"""
+    """Multi-Object Smart UV unwrap - unwrap multiple objects individually with separate UV islands"""
     bl_idname = "mesh.smart_uv_unwrap_individual"
-    bl_label = "Smart UV Unwrap Individual"
-    bl_description = "Smart UV unwrap each selected object individually with separate UV islands"
+    bl_label = "Multi-Object Smart UV Unwrap"
+    bl_description = "Smart UV unwrap multiple objects individually with separate UV islands and pack optimization"
     bl_options = {'REGISTER', 'UNDO'}
 
     # Properties for the operator

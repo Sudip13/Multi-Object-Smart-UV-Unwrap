@@ -3,8 +3,8 @@ from bpy.types import Panel
 
 
 class VIEW3D_PT_smart_uv_unwrap(Panel):
-    """Smart UV Unwrap Panel in 3D Viewport sidebar"""
-    bl_label = "Smart UV Individual"
+    """Multi-Object Smart UV Unwrap Panel in 3D Viewport sidebar"""
+    bl_label = "Multi-Object Smart UV"
     bl_idname = "VIEW3D_PT_smart_uv_unwrap"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
@@ -23,7 +23,7 @@ class VIEW3D_PT_smart_uv_unwrap(Panel):
         
         # Main title
         col = layout.column(align=True)
-        col.label(text="Individual Object UV Unwrap", icon='UV')
+        col.label(text="Multi-Object UV Unwrap", icon='UV')
         
         # Separator
         col.separator()
@@ -32,7 +32,7 @@ class VIEW3D_PT_smart_uv_unwrap(Panel):
         box = layout.box()
         box.label(text="Instructions:", icon='INFO')
         box.label(text="1. Select multiple objects")
-        box.label(text="2. Click 'Smart UV Unwrap Individual'")
+        box.label(text="2. Click 'Multi-Object Smart UV Unwrap'")
         box.label(text="3. Each object gets separate UV maps")
         box.label(text="4. Works in any mode!")
         
@@ -63,7 +63,7 @@ class VIEW3D_PT_smart_uv_unwrap(Panel):
         # Main operator button
         op = col.operator(
             "mesh.smart_uv_unwrap_individual",
-            text="Smart UV Unwrap Individual",
+            text="Multi-Object Smart UV Unwrap",
             icon='UV_DATA'
         )
         

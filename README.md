@@ -1,17 +1,19 @@
-    # Smart UV Unwrap Individual - Blender Addon
+    # Multi-Object Smart UV Unwrap - Blender Addon
 
-A Blender addon that provides smart UV unwrapping functionality for individual objects, keeping each object's UV islands separate instead of sharing the same UV map.
+A Blender addon that provides smart UV unwrapping functionality for multiple objects simultaneously, keeping each object's UV islands separate instead of sharing the same UV map.
 
 ## Problem Solved
 
-By default, when you select multiple objects in Blender and use "Smart UV Project", all objects share the same UV space, which can cause overlapping and unwanted UV island mixing. This addon solves that by unwrapping each selected object individually, ensuring each object maintains its own separate UV islands.
+By default, when you select multiple objects in Blender and use "Smart UV Project", all objects share the same UV space, which can cause overlapping and unwanted UV island mixing. This addon solves that by unwrapping each selected object individually, ensuring each object maintains its own separate UV islands with optional pack islands optimization.
 
 ## Features
 
-- 🎯 **Individual Object Processing**: Each selected object is unwrapped separately
-- 🏝️ **Separate UV Islands**: No shared UV space between objects
+- 🎯 **Multi-Object Processing**: Process multiple selected objects simultaneously
+- 🏝️ **Separate UV Islands**: Each object gets its own UV coordinate space (no shared UV maps)
+- 📦 **Pack Islands**: Optional UV island packing with customizable margins
+- 🔄 **Rotation Optimization**: Allow island rotation for better space utilization
 - ⚙️ **Customizable Settings**: Adjust angle limits, island margins, and area weights
-- 🚀 **Quick Presets**: High Quality and Fast presets for common use cases
+- 🚀 **Quick Presets**: High Quality, Fast, Tight Pack, and No Pack presets
 - 🎨 **User-Friendly UI**: Clean panel in the 3D Viewport sidebar
 - 📝 **Built-in Instructions**: Step-by-step guidance in the UI
 
@@ -22,7 +24,7 @@ By default, when you select multiple objects in Blender and use "Smart UV Projec
 2. Open Blender
 3. Go to `Edit > Preferences > Add-ons`
 4. Click `Install...` and select the downloaded ZIP file
-5. Enable the addon by checking the box next to "Smart UV Unwrap Individual"
+3. Enable the addon by checking the box next to "Multi-Object Smart UV Unwrap"
 
 ### Method 2: Manual Installation
 1. Download/clone this repository
@@ -39,7 +41,7 @@ By default, when you select multiple objects in Blender and use "Smart UV Projec
 1. Select multiple mesh objects in your scene
 2. Switch to **Edit Mode** (`Tab` key)
 3. Open the **Smart UV** panel in the 3D Viewport sidebar (`N` key)
-4. Click **"Smart UV Unwrap Individual"**
+3. Click **"Multi-Object Smart UV Unwrap"**
 
 ### Advanced Usage
 - Use the **operator panel** (bottom left after running) to adjust settings:
@@ -49,17 +51,28 @@ By default, when you select multiple objects in Blender and use "Smart UV Projec
   - **Correct Aspect**: Account for image aspect ratios
 
 ### Quick Presets
-- **High Quality**: Better results, slower processing
+- **High Quality**: Better results with tight packing and rotation
   - Angle Limit: 60°
   - Island Margin: 0.01
   - Area Weight: 0.2
   - Correct Aspect: On
+  - Pack Islands: On with tight margins
 
-- **Fast**: Faster processing, good for quick iterations
+- **Fast**: Faster processing for quick iterations
   - Angle Limit: 80°
   - Island Margin: 0.05
   - Area Weight: 0.0
   - Correct Aspect: Off
+  - Pack Islands: On with loose margins
+
+- **Tight Pack**: Maximum UV space efficiency
+  - Optimized for texture atlases
+  - Minimal margins between islands
+  - Rotation enabled for best fit
+
+- **No Pack**: Traditional unwrapping without packing
+  - Individual islands remain as generated
+  - No additional optimization
 
 ## Technical Details
 
@@ -80,7 +93,7 @@ By default, when you select multiple objects in Blender and use "Smart UV Projec
 
 ### File Structure
 ```
-smart_uv_unwrap_individual/
+multi_object_smart_uv_unwrap/
 ├── __init__.py              # Main addon entry point
 ├── operators/
 │   ├── __init__.py         # Operators module init

@@ -1,10 +1,10 @@
 bl_info = {
-    "name": "Smart UV Unwrap Individual",
+    "name": "Multi-Object Smart UV Unwrap",
     "author": "Your Name",
     "version": (1, 3, 0),
     "blender": (3, 0, 0),
     "location": "View3D > Sidebar > Smart UV",
-    "description": "Smart UV unwrap individual objects with separate UV islands and pack islands optimization",
+    "description": "Smart UV unwrap multiple objects individually with separate UV islands and pack islands optimization",
     "warning": "",
     "doc_url": "",
     "category": "UV",

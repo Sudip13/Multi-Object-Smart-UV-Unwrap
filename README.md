@@ -1,5 +1,8 @@
     # Multi-Object Smart UV Unwrap - Blender Addon
 
+**Developer**: [Sudip Soni](https://github.com/Sudip13)  
+**Repository**: [https://github.com/Sudip13/Blender-Plugins](https://github.com/Sudip13/Blender-Plugins)
+
 A Blender addon that provides smart UV unwrapping functionality for multiple objects simultaneously, keeping each object's UV islands separate instead of sharing the same UV map.
 
 ## Problem Solved
@@ -77,8 +80,8 @@ By default, when you select multiple objects in Blender and use "Smart UV Projec
 ## Technical Details
 
 ### Compatibility
-- **Blender Version**: 3.0+
-- **Mode Requirements**: Edit Mode with mesh objects
+- **Blender Version**: 2.80+ (Compatible with Blender 2.8, 3.x, 4.x series)
+- **Mode Requirements**: Works in any mode (Object, Edit, etc.)
 - **Object Types**: Mesh objects only
 
 ### How It Works
@@ -130,7 +133,7 @@ If you encounter issues:
 ## Development
 
 ### Requirements
-- Blender 3.0+
+- Blender 2.80+
 - Python knowledge for modifications
 - Understanding of Blender's Python API (bpy)
 
@@ -144,10 +147,24 @@ The addon is structured for easy extension:
 
 This addon is provided as-is for educational and practical use. Feel free to modify and distribute according to your needs.
 
+## Developer
+
+**Sudip Soni**
+- 🔗 GitHub: [Sudip13](https://github.com/Sudip13)
+- 📧 Repository: [Blender-Plugins](https://github.com/Sudip13/Blender-Plugins)
+- 🐛 Issues: [Report Bugs](https://github.com/Sudip13/Blender-Plugins/issues)
+
 ## Contributing
 
-Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests.
+Contributions are welcome! Please feel free to submit issues, feature requests, or pull requests at the GitHub repository.
+
+### How to Contribute:
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
-**Made with ❤️ for the Blender community**
+**Made with ❤️ by [Sudip Soni](https://github.com/Sudip13) for the Blender community**

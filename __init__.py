@@ -1,12 +1,14 @@
 bl_info = {
     "name": "Multi-Object Smart UV Unwrap",
-    "author": "Your Name",
-    "version": (1, 3, 0),
-    "blender": (3, 0, 0),
+    "author": "Sudip Soni",
+    "version": (1, 4, 0),
+    "blender": (2, 80, 0),
     "location": "View3D > Sidebar > Smart UV",
-    "description": "Smart UV unwrap multiple objects individually with separate UV islands and pack islands optimization",
+    "description": "Fast smart UV unwrap multiple objects individually with separate UV islands and pack islands optimization",
     "warning": "",
-    "doc_url": "",
+    "doc_url": "https://github.com/Sudip13/Blender-Plugins",
+    "tracker_url": "https://github.com/Sudip13/Blender-Plugins/issues",
+    "support": "COMMUNITY",
     "category": "UV",
 }
 

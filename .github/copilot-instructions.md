@@ -1,5 +1,8 @@
 # Multi-Object Smart UV Unwrap Addon Development
 
+**Developer**: Sudip Soni  
+**Repository**: https://github.com/Sudip13/Blender-Plugins
+
 This workspace contains a Blender addon that provides smart UV unwrapping functionality for multiple objects simultaneously, keeping each object's UV islands separate instead of sharing the same UV map.
 
 ## Project Structure
@@ -12,7 +15,7 @@ This workspace contains a Blender addon that provides smart UV unwrapping functi
 - Follow Blender addon development conventions
 - Use proper operator registration and bl_info structure
 - Implement proper error handling for UV operations
-- Maintain compatibility with Blender 3.0+
+- Maintain compatibility with Blender 2.80+
 
 ## Addon Functionality
 The addon provides:

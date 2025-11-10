@@ -70,7 +70,7 @@ class MESH_OT_smart_uv_unwrap_individual(Operator):
                 any(obj.type == 'MESH' for obj in context.selected_objects))
 
     def execute(self, context):
-        """Execute the UV unwrapping operation"""
+        """Execute the UV unwrapping operation - OPTIMIZED VERSION"""
         # Store the current active object and mode
         original_active = context.active_object
         original_mode = context.mode
@@ -86,86 +86,65 @@ class MESH_OT_smart_uv_unwrap_individual(Operator):
         # Count processed objects
         processed_count = 0
         failed_objects = []
+        total_objects = len(mesh_objects)
+        
+        # Single progress report for start
+        self.report({'INFO'}, f"Processing {total_objects} objects...")
         
         try:
-            # Process each mesh object individually in complete isolation
+            # Ensure we're in Object mode ONCE
+            if context.mode != 'OBJECT':
+                bpy.ops.object.mode_set(mode='OBJECT')
+            
+            # Process each mesh object with optimized workflow
             for i, obj in enumerate(mesh_objects):
                 try:
-                    # Report progress for user feedback
-                    self.report({'INFO'}, f"Processing object {i+1}/{len(mesh_objects)}: {obj.name}")
+                    # Verify object has geometry (fast check)
+                    if len(obj.data.polygons) == 0:
+                        continue
                     
-                    # COMPLETE ISOLATION: Clear all selections first
-                    bpy.ops.object.select_all(action='DESELECT')
+                    # OPTIMIZED SELECTION: Direct selection without clearing all
+                    for other_obj in context.selected_objects:
+                        if other_obj != obj:
+                            other_obj.select_set(False)
                     
-                    # Ensure we're in Object mode
-                    if context.mode != 'OBJECT':
-                        bpy.ops.object.mode_set(mode='OBJECT')
-                    
-                    # Select ONLY this object
                     obj.select_set(True)
                     context.view_layer.objects.active = obj
                     
-                    # Verify object has geometry
-                    if len(obj.data.polygons) == 0:
-                        self.report({'INFO'}, f"Object '{obj.name}' has no faces, skipping")
-                        continue
-                    
-                    # Create a fresh UV layer if needed (with unique name)
-                    uv_layer_name = f"UVMap_{obj.name}_{i}"
+                    # Ensure UV layer exists (create if needed)
                     if not obj.data.uv_layers:
-                        obj.data.uv_layers.new(name=uv_layer_name)
+                        obj.data.uv_layers.new()
                     else:
-                        # Set active UV layer
                         obj.data.uv_layers.active_index = 0
                     
-                    # Enter Edit mode for THIS object only
+                    # SINGLE MODE SWITCH: Enter Edit mode
                     bpy.ops.object.mode_set(mode='EDIT')
                     
-                    # Double-check we're in edit mode with correct object
-                    if context.active_object != obj:
-                        raise Exception(f"Failed to set {obj.name} as active object")
-                    
-                    # Select ALL faces of this object
+                    # Select all faces ONCE
                     bpy.ops.mesh.select_all(action='SELECT')
                     
-                    # Force update to ensure mesh is ready
-                    bpy.context.view_layer.update()
+                    # Perform smart UV unwrap
+                    bpy.ops.uv.smart_project(
+                        angle_limit=self.angle_limit,
+                        island_margin=self.island_margin,
+                        area_weight=self.area_weight,
+                        correct_aspect=self.correct_aspect
+                    )
                     
-                    # Perform smart UV unwrap with explicit override context
-                    with context.temp_override(active_object=obj, selected_objects=[obj]):
-                        bpy.ops.uv.smart_project(
-                            angle_limit=self.angle_limit,
-                            island_margin=self.island_margin,
-                            area_weight=self.area_weight,
-                            correct_aspect=self.correct_aspect
+                    # Pack islands if requested (in same edit session)
+                    if self.pack_islands:
+                        bpy.ops.uv.pack_islands(
+                            margin=self.pack_margin,
+                            rotate=self.pack_rotate
                         )
-                        
-                        # Pack islands if requested
-                        if self.pack_islands:
-                            # Select all faces to ensure all UV islands are included
-                            bpy.ops.mesh.select_all(action='SELECT')
-                            
-                            # Pack UV islands
-                            bpy.ops.uv.pack_islands(
-                                margin=self.pack_margin,
-                                rotate=self.pack_rotate
-                            )
                     
-                    # Ensure the mesh is updated
-                    obj.data.update()
-                    
-                    # Return to Object mode
+                    # SINGLE MODE SWITCH: Return to Object mode
                     bpy.ops.object.mode_set(mode='OBJECT')
-                    
-                    # Deselect this object before moving to next
-                    obj.select_set(False)
                     
                     processed_count += 1
                     
                 except Exception as obj_error:
-                    error_msg = f"{obj.name}: {str(obj_error)}"
-                    failed_objects.append(error_msg)
-                    self.report({'WARNING'}, f"Failed to process {obj.name}: {str(obj_error)}")
+                    failed_objects.append(f"{obj.name}: {str(obj_error)}")
                     
                     # Ensure we're back in Object mode even if error occurred
                     try:
@@ -180,14 +159,16 @@ class MESH_OT_smart_uv_unwrap_individual(Operator):
             return {'CANCELLED'}
         
         finally:
-            # Restore original selection and state
+            # OPTIMIZED RESTORATION: Batch operations
             try:
                 # Ensure we're in Object mode
                 if context.mode != 'OBJECT':
                     bpy.ops.object.mode_set(mode='OBJECT')
                     
-                # Restore original selection
-                bpy.ops.object.select_all(action='DESELECT')
+                # Restore original selection efficiently
+                for obj in context.selected_objects:
+                    obj.select_set(False)
+                
                 for obj in original_selection:
                     if obj:  # Check if object still exists
                         obj.select_set(True)
@@ -207,14 +188,16 @@ class MESH_OT_smart_uv_unwrap_individual(Operator):
                                 bpy.ops.object.mode_set(mode=mode.upper())
                     except:
                         pass
+                        
+                # Single update at the end
+                bpy.context.view_layer.update()
+                
             except Exception as restore_error:
                 self.report({'WARNING'}, f"Could not fully restore original state: {str(restore_error)}")
         
-        # Report final results
+        # Single final report
         if failed_objects:
-            self.report({'WARNING'}, f"Completed: {processed_count} objects unwrapped, {len(failed_objects)} failed")
-            for failure in failed_objects:
-                self.report({'INFO'}, f"Failed: {failure}")
+            self.report({'WARNING'}, f"Completed: {processed_count}/{total_objects} objects unwrapped successfully")
         else:
             self.report({'INFO'}, f"SUCCESS: All {processed_count} objects unwrapped with individual UV maps!")
         

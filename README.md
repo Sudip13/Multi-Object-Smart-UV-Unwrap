@@ -45,6 +45,8 @@ By default, when you select multiple objects in Blender and use "Smart UV Projec
 2. Switch to **Edit Mode** (`Tab` key)
 3. Open the **Smart UV** panel in the 3D Viewport sidebar (`N` key)
 3. Click **"Multi-Object Smart UV Unwrap"**
+<img width="800" height="400" alt="2b" src="https://github.com/user-attachments/assets/fcde89f1-bcb4-4cbb-85d6-7bb19ce0078c" />
+<img width="800" height="400" alt="3b" src="https://github.com/user-attachments/assets/bd687c8e-92e8-4a24-902d-e56adc41dbc5" />
 
 ### Advanced Usage
 - Use the **operator panel** (bottom left after running) to adjust settings:

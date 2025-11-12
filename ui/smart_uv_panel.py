@@ -133,7 +133,7 @@ class VIEW3D_PT_smart_uv_unwrap(Panel):
         # Tips section
         layout.separator()
         box = layout.box()
-        box.label(text="Tips:", icon='HELP')
+        box.label(text="Tips:", icon='DOT')
         box.label(text="• Each object gets its OWN UV map")
         box.label(text="• No shared UV coordinates")
         box.label(text="• Pack Islands optimizes UV space")
